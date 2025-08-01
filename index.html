@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -20,7 +19,7 @@
     .controls {
       margin-bottom: 10px;
     }
-    label, select, input {
+    label, select, input, button {
       margin: 5px;
     }
   </style>
@@ -41,6 +40,7 @@
       <option value="Impact">Impact</option>
     </select>
     <button onclick="addText()">Ajouter texte</button>
+    <button onclick="deleteSelected()">Supprimer sélection</button>
     <button onclick="exportDesign()">Exporter</button>
   </div>
 
@@ -80,6 +80,14 @@
         fill: '#000'
       });
       canvas.add(textbox);
+    }
+
+    // Supprimer l'élément sélectionné
+    function deleteSelected() {
+      const active = canvas.getActiveObject();
+      if (active) {
+        canvas.remove(active);
+      }
     }
 
     // Exporter le design
