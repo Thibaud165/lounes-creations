@@ -91,7 +91,7 @@ function envoyerCommande() {
       date: new Date().toISOString(),
     };
 
-    fetch("https://ton-backend.onrender.com/api/commande", {
+    fetch("https://lounes-creations-backend.onrender.com", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
