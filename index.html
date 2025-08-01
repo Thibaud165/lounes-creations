@@ -90,6 +90,13 @@
       }
     }
 
+    // Suppr via la touche "Suppr"
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Delete') {
+        deleteSelected();
+      }
+    });
+
     // Exporter le design
     function exportDesign() {
       const dataURL = canvas.toDataURL({ format: 'png' });
