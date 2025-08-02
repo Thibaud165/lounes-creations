@@ -58,7 +58,7 @@ function exportDesign() {
   link.click();
 }
 
-// Exporter le design sans le fond
+// Exporter le design sans fond
 function exportWithoutBackground() {
   const originalBg = canvas.backgroundImage;
 
@@ -79,6 +79,7 @@ function exportWithoutBackground() {
 function envoyerCommande() {
   const originalBg = canvas.backgroundImage;
 
+  // Supprime le fond temporairement
   canvas.setBackgroundImage(null, canvas.renderAll.bind(canvas));
 
   setTimeout(() => {
@@ -91,22 +92,26 @@ function envoyerCommande() {
       date: new Date().toISOString(),
     };
 
-    fetch("https://lounes-creations-backend.onrender.com", {
+    fetch("https://lounes-creations-backend.onrender.com/api/commande", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(dataCommande),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+        return res.json();
+      })
       .then((data) => {
         alert("Commande envoyée avec succès 🎉");
       })
       .catch((err) => {
         console.error("Erreur envoi commande:", err);
-        alert("Erreur lors de l'envoi de la commande");
+        alert("Erreur lors de l'envoi de la commande : " + err.message);
       });
 
+    // Remet le fond après envoi
     canvas.setBackgroundImage(originalBg, canvas.renderAll.bind(canvas));
   }, 100);
 }
